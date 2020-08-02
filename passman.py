@@ -1,7 +1,6 @@
-import random
+from random import randint
 import sqlite3
-import pyperclip
-
+from pyperclip import copy
 conn = sqlite3.connect('passwords.db')
 
 c = conn.cursor()
