@@ -1,0 +1,56 @@
+from json import dump
+from time import sleep
+from datetime import date
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
+main_url = 'https://elron.pilet.ee/et/results/Saue/Keila/' + str(date.today())
+returning_url = 'https://elron.pilet.ee/et/results/Keila/Saue/' + str(date.today())
+
+options = Options()
+options.headless = True
+
+binary = FirefoxBinary('/sbin/firefox-developer-edition')
+driver = webdriver.Firefox(options=options, firefox_binary=binary)
+
+
+train_lists = []
+
+
+def times_to_file(str):
+    with open(str, "r") as f:
+        data = f.read()
+    with open(str, 'w') as json_file:
+        dump(nested_dict_main, json_file, indent=4, sort_keys=True)
+
+
+def get_times(url, ):
+    driver.get(url)
+
+    sleep(10)
+
+    elem = driver.find_elements_by_class_name('trip-summary__info')
+
+    for i in elem:
+        time = i.text[0:5] + '-' + i.text[6:11]
+        duration = i.text[12:16].replace(" ", "")
+        train = i.text[19:22] + '--' + i.text[23:-1] + i.text[-1:]
+        final = time + '--' + duration + '--' + train
+        train_lists.append(final)
+
+    return train_lists
+
+
+print(get_times(main_url))
+nested_dict_main = ({'main_times': train_lists})
+times_to_file('times.json')
+
+train_lists = []
+
+print(get_times(returning_url))
+nested_dict_main = {'returning_times': train_lists}
+
+times_to_file('returning_times.json')
+
+driver.quit()
