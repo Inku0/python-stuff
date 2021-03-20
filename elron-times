@@ -5,8 +5,8 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-main_url = 'https://elron.pilet.ee/et/results/Saue/Keila/' + str(date.today())
-returning_url = 'https://elron.pilet.ee/et/results/Keila/Saue/' + str(date.today())
+main_url = 'https://elron.pilet.ee/et/results/.../.../' + str(date.today())
+returning_url = 'https://elron.pilet.ee/et/results/.../.../' + str(date.today())
 
 options = Options()
 options.headless = True
