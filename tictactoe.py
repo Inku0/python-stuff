@@ -8,7 +8,12 @@ class board:
         self.bot_pos = bot_pos
 
     def check_win(self):
-        pass
+        for i in range(len(win_conditions)):
+            if all(item in self.player_pos for item in win_conditions[i]):
+                return True
+            else:
+                return False
+
         # todo
 
     def check_draw(self):
@@ -41,7 +46,9 @@ class board:
                 self.positions[where] = 'x'
             else:
                 print('nope')
-                continue
+
+        possibilities = [works for works in self.positions if type(works) == int if works not in self.bot_pos if
+                         works not in self.player_pos]
 
         random.shuffle(possibilities)
         bot_where = possibilities[0]
